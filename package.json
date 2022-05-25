@@ -1,0 +1,8 @@
+{
+  "//comment": "This package.json is the development entrypoint and contains links to more specific entrypoints",
+  "//comment1": "@stealify/engine* === workspaces/packages/engine* where astrisc is a string replacement ",
+  "workspaces": [
+    "workspaces/build",
+    "workspaces/packages/engine"
+  ]
+}
