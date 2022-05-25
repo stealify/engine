@@ -11,3 +11,5 @@ as the main package /packages/@stealify/engine does not directly include binarys
 ## Note
 On OS like IOS / Android or Fuchsia is no engine-desktop support as it does not fit into the UI Concept of this Operating Systems
 The Genral way to Creat Apps with Stealify for mobile like devices is to use the cordova framework for NodeJS and if needed the cordova-nodejs-mobile package from Jaina Systems. The @stealify/engine does not offer you any benefits on such devices as they are not designed for Authoring Stealify Applications they are runner only targets for the @stealify/compiler
+
+the main engine code is general designed to work inside so called web workers that is a w3c standard that works on all platforms
