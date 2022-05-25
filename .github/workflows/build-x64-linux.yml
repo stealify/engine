@@ -19,11 +19,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: curl -s https://nodejs.org/dist/latest/ | grep linux-x64.tar.gz | cut -d ">" -f2 | cut -d "<" -f1 | xargs -I {} curl https://nodejs.org/dist/latest/{} | tar zxfv - -C $PWD --strip 1
-
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
+          mkdir -p node && cd node
+          curl -s https://nodejs.org/dist/latest/ | grep linux-x64.tar.gz | cut -d ">" -f2 | cut -d "<" -f1 | xargs -I {} curl https://nodejs.org/dist/latest/{} | tar zxfv - -C $PWD --strip 1
           ls -ahl
