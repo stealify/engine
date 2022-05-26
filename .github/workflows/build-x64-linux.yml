@@ -24,6 +24,8 @@ jobs:
         run: |
           # mkdir -p node_src && cd node_src
           git clone https://github.com/nodejs/node -b master --single-branch node_src
+          cd node_src
+          ls -ahl
           mkdir -p node && cd node
           curl -s https://nodejs.org/dist/latest/ | grep linux-x64.tar.gz | cut -d ">" -f2 | cut -d "<" -f1 | xargs -I {} curl https://nodejs.org/dist/latest/{} | tar zxfv - -C $PWD --strip 1
           ls -ahl
