@@ -1,0 +1,39 @@
+name: CrossPlatform Build
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+#on: push
+jobs:
+  insiders-build:
+    strategy:
+      matrix:
+        os: [windows, macos, ubuntu]
+        include:
+          - os: windows
+            build: npx caxa --directory . --command "{{caxa}}/node_modules/.bin/node" "{{caxa}}/lib/index.js" --output "stealify-engine-win-${{ github.sha }}.exe"
+            artifact: stealify-engine-win-${{ github.sha }}.exe
+          - os: macos
+            build: |
+              npx caxa --directory . --command "{{caxa}}/node_modules/.bin/node" "{{caxa}}/lib/index.js" --output "stealify-engine.app"
+              tar -czf "stealify-engine-macos-${{ github.sha }}.app.tgz" "stealify-engine.app"
+            artifact: stealify-engine-macos-${{ github.sha }}.app.tgz
+          - os: ubuntu
+            build: |
+              npx caxa --directory . --command "{{caxa}}/node_modules/.bin/node" "{{caxa}}/lib/index.js" --output "stealify-engine"
+              tar -czf "stealify-engine-linux-${{ github.sha }}.tgz" "stealify-engine"
+            artifact: stealify-engine-linux-${{ github.sha }}.tgz
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 18
+      - run: |
+          npm ci
+          ${{ matrix.build }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}
